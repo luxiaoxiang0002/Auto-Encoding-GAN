@@ -23,10 +23,10 @@ isExists = os.path.exists(img_path)
 if not isExists:
     os.mkdir(img_path)
 
-classifier_path = root + "/mnist_images/" + "mnist_classifier_model"
-isExists = os.path.exists(classifier_path)
+discriminator_path = root + "/mnist_images/" + "mnist_discriminator_model"
+isExists = os.path.exists(discriminator_path)
 if not isExists:
-    os.mkdir(classifier_path)
+    os.mkdir(discriminator_path)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--n_epochs", type=int, default=500, help="number of epochs of training")
@@ -331,9 +331,9 @@ for epoch in range(opt.n_epochs):
     if batches_done % opt.sample_interval == 0:
         sample_image(n_row=10, batches_done=batches_done, static_label=mutil_one_hot_code, each_gen_num=each_gen_num)
 
-        classifier_model_dir = classifier_path + "/classifier_%d.pth" % (epoch)
+        discriminator_model_dir = discriminator_path + "/discriminator_%d.pth" % (epoch)
         state = {'model': discriminator.state_dict()}
-        torch.save(state, classifier_model_dir)
+        torch.save(state, discriminator_model_dir)
 
 from torchvision import utils as vutils
 z = Variable(Tensor(np.random.normal(0, 1, (256, opt.latent_dim)))).to(device)
