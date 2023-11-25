@@ -1,6 +1,7 @@
 # Auto-Encoding-GAN
 
-1、本代码涉及的论文：Auto-Encoding Generative Adversarial Networks Towards Mode Collapse Reduction and Feature Representation Enhancement  
+1、本代码涉及的论文：  
+Auto-Encoding Generative Adversarial Networks Towards Mode Collapse Reduction and Feature Representation Enhancement  
 
 2、本代码需要运行的环境：  
 处理器：13th Gen Intel(R) Core(TM) i7-13700H   2.40 GHz  
