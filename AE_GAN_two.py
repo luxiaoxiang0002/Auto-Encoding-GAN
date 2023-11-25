@@ -30,7 +30,7 @@ parser.add_argument("--b2", type=float, default=0.999, help="adam: decay of firs
 parser.add_argument("--n_cpu", type=int, default=8, help="number of cpu threads to use during batch generation")
 parser.add_argument("--latent_dim", type=int, default=100, help="dimensionality of the latent space")
 parser.add_argument("--code_dim", type=int, default=2, help="latent code")
-parser.add_argument("--n_classes", type=int, default=7, help="number of classes for dataset")
+parser.add_argument("--n_classes", type=int, default=15, help="number of classes for dataset")
 parser.add_argument("--img_size", type=int, default=32, help="size of each image dimension")
 parser.add_argument("--channels", type=int, default=1, help="number of image channels")
 parser.add_argument("--sample_interval", type=int, default=10, help="interval between image sampling")
@@ -42,12 +42,12 @@ cuda = True if torch.cuda.is_available() else False
 file_name = "R15_images"
 os.makedirs(file_name, exist_ok=True)
 root = os.getcwd()
-classifier_path = root + "/" + file_name + "/" + "classifier_model"
-isExists = os.path.exists(classifier_path)
+generator_path = root + "/" + file_name + "/" + "generator_model"
+isExists = os.path.exists(generator_path)
 if not isExists:
-    os.mkdir(classifier_path)
+    os.mkdir(generator_path)
 
-discriminator_path = root + "/" + file_name + "/"+ "generator_model"
+discriminator_path = root + "/" + file_name + "/"+ "/discriminator_model"
 isExists = os.path.exists(discriminator_path)
 if not isExists:
     os.mkdir(discriminator_path)
@@ -254,7 +254,7 @@ discriminator.apply(weights_init_normal)
 # Configure data loader
 # Configure data loader
 root = os.getcwd()
-dataset_file = root + "/" + "dataset/Aggregation.txt"
+dataset_file = root + "/" + "dataset/R15.txt"
 X = np.loadtxt(dataset_file)
 X = X[:, 0:2]
 dataset = Normalization(X, -0.8, 0.8)
@@ -430,3 +430,7 @@ for epoch in range(opt.n_epochs):
             discriminator_model_dir = discriminator_path + "/discriminator_%d.pth" % (epoch)
             state = {'model': discriminator.state_dict()}
             torch.save(state, discriminator_model_dir)
+
+            generator_model_dir = generator_path + "/generator_%d.pth" % (epoch)
+            state = {'model':generator.state_dict()}
+            torch.save(state, generator_model_dir)
